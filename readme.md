@@ -26,7 +26,11 @@ Clone the git repo
 
     git clone https://github.com/WillJMurphy/virgin-flight-dashboard.git
 
-Install http-proxy:
+Move into the repo
+
+    cd virgin-flight-dashboard/
+
+Install http-proxy
 
     npm install http-proxy
 
