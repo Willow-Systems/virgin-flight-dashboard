@@ -1,0 +1,272 @@
+<html>
+	<head>
+	<title> Stream Virgin Flight Data </title>
+	<link href="res/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="res/css/main.css" rel="stylesheet">
+	<link href="res/css/main2.css" rel="stylesheet">
+	<script src="res/js/jquery-1.11.1.min.js"></script>
+	<script src="res/js/bootstrap4.min.js"></script>
+	<link href="res/fa2/css/all.css" rel="stylesheet">
+	<script>
+		function getSomething(url, callback) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && RegExp('2.*').test(xmlHttp.status)) {
+					callback(xmlHttp.responseText);
+					console.log(rurl);
+				} else if (xmlHttp.readyState == 4) {
+					// console.log("1: " + xmlHttp.readyState + " 2: " + xmlHttp.status);
+					console.log("Error: " + xmlHttp.responseText);
+					if (errorCallback != null) {
+						errorCallback();
+					}
+				}
+			}
+
+			xmlHttp.open("GET", url, true); // true for asynchronous
+			// xmlHttp.setRequestHeader("Accept", "application/json");
+			xmlHttp.send(null);
+
+		}
+
+		function doLoad() {
+		//	alert("Loaded");
+			getSomething("http://127.0.0.1:3001/inflight/services/flightdata/v1/flightdata", update);
+		}
+
+
+		function boolToTrueBool(bool) {
+			if (bool == "0" || bool == "false" || bool == false) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		function boolToChar(bool) {
+			if (bool == false) {
+				return '<i class="fas fa-times"></i> ';
+			} else {
+				return '<i class="fas fa-check"></i>';
+			}
+		}
+		function setBoolClass(element, bool, inv) {
+				element.removeClass("true");
+				element.removeClass("false");
+				if (bool == "0" || bool == "false" || bool == false) {
+					(inv == true) ? element.addClass("true") : element.addClass("false")
+				} else {
+					(inv == true) ? element.addClass("false") : element.addClass("true")
+				}
+
+
+		}
+
+		function cutLeadingZeros(inputstring) {
+			var newstring = "";
+			var started = false;
+			for (var c in inputstring) {
+				if (inputstring[c] != "0") {
+					started = true;
+				}
+				if (started	== true) {
+					newstring = newstring + inputstring[c]
+				}
+			}
+			return newstring;
+		}
+
+		function update(texthere) {
+		//	$('#main').html(texthere);
+			var us = JSON.parse(texthere);
+
+			$('#ent_plane_decompress').html(boolToChar(boolToTrueBool(us.td_id_decompression)));
+			setBoolClass($('#ent_plane_decompress'), boolToTrueBool(us.td_id_decompression), true);
+
+			$('#ent_plane_doors_closed').html(boolToChar(boolToTrueBool(us.td_id_all_doors_closed)));
+			setBoolClass($('#ent_plane_doors_closed'), boolToTrueBool(us.td_id_all_doors_closed));
+
+			$('#ent_plane_groundspeed').html(cutLeadingZeros((parseInt(us.td_id_fltdata_ground_speed) * 1.15).toString().split(".")[0]) + " mph");
+			$('#ent_env_windspeed_match').html(us.td_id_fltdata_wind_speed + " mph");
+
+			$('#ent_plane_alt').html(cutLeadingZeros(us.td_id_fltdata_altitude));
+			$('#ent_plane_lat').html(us.td_id_fltdata_present_position_latitude);
+			$('#ent_plane_long').html(us.td_id_fltdata_present_position_longitude);
+			$('#ent_dest_lat').html(us.td_id_fltdata_destination_latitude);
+			$('#ent_dest_long').html(us.td_id_fltdata_destination_longitude);
+
+
+
+
+			$('#ent_flight_num').html(us.td_id_fltdata_flight_number);
+			$('#ent_airport_dept').html(us.td_id_fltdata_departure_baggage_id);
+			$('#ent_airport_arrv').html(us.td_id_fltdata_destination_baggage_id);
+			$('#ent_plane_tailid').html(us.td_id_airframe_tail_number);
+
+			$('#ent_time_dept').html(us.td_id_fltdata_time_at_origin[0] + us.td_id_fltdata_time_at_origin[1] + ":" + us.td_id_fltdata_time_at_origin[2] + us.td_id_fltdata_time_at_origin[3]);
+			$('#ent_time_arrv').html(us.td_id_fltdata_time_at_destination[0] + us.td_id_fltdata_time_at_destination[1] + ":" + us.td_id_fltdata_time_at_destination[2] + us.td_id_fltdata_time_at_destination[3]);
+			$('#ent_env_temp').html(us.td_id_fltdata_outside_air_temp.replace("0",".") + "C");
+
+			$('#ent_flight_time_remain').html(us.td_id_fltdata_time_to_destination[0] + us.td_id_fltdata_time_to_destination[1] + " Hours " + us.td_id_fltdata_time_to_destination[2] + us.td_id_fltdata_time_to_destination[3] + " Minutes");
+
+			$('#ent_plane_dist_flown').html(cutLeadingZeros(us.td_id_fltdata_distance_traveled) + " Miles");
+
+
+
+
+		}
+
+
+	</script>
+	</head>
+	<body onload="doLoad()" onclick='doLoad()'>
+		<div id="main">
+
+			<h1> Streaming Flight Data </h1> <br><br>
+
+			<div class="row row-wide row-landing">
+				<div class="col-md-5" id="panelHolder">
+
+					<div class="card card-body card-light">
+						<h4 class="card-title" >Boolean Data</h4>
+						<hr class="light-underline"/>
+						<div class="card-text">
+
+							<div id="notficationContainer" >
+								<table>
+									<tr> <td> Plane is decompressing </td> <td id="ent_plane_decompress" class="tdp"> LOADING  </td> </tr>
+									<tr> <td> All doors are closed </td> <td id="ent_plane_doors_closed" class="tdp"> LOADING </td> </tr>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="card card-body card-light">
+						<h4 class="card-title" >Plane Speed</h4>
+						<hr class="light-underline"/>
+						<div class="card-text" id="collapseProxyList">
+
+							<table>
+								<tr> <td> Ground Speed </td> <td id="ent_plane_groundspeed" class="tdp"> XXXX  </td> </tr>
+								<tr> <td> Wind Speed Difference </td> <td id="ent_env_windspeed_match" class="tdp"> XXXX  </td> </tr>
+								<!-- <tr> <td> Head Wind Speed </td> <td id="ent_env_windspeed_head" class="tdp"> XXXX  </td> </tr> -->
+							</table>
+
+						</div>
+					</div>
+
+					<div class="card card-body card-light">
+						<h4 class="card-title" >Location</h4>
+						<hr class="light-underline"/>
+
+						<div class="card-text" id="collapseDiskUsage">
+
+							<table>
+								<tr> <td> Altitude </td> <td id="ent_plane_alt" class="tdp"> XXXX  </td> </tr>
+								<tr> <td> Latitude </td> <td id="ent_plane_lat" class="tdp"> XXXX  </td> </tr>
+								<tr> <td> Longitude </td> <td id="ent_plane_long" class="tdp"> XXXX  </td> </tr>
+								<tr> <td> &nbsp  </td> </tr>
+								<tr> <td> Destination Latitude </td> <td id="ent_dest_lat" class="tdp"> XXXX  </td> </tr>
+								<tr> <td> Destination Longitude </td> <td id="ent_dest_long" class="tdp"> XXXX  </td> </tr>
+								<tr> <td> &nbsp  </td> </tr>
+								<tr> <td> Distance Travelled </td> <td id="ent_plane_dist_flown" class="tdp"> XXXX  </td> </tr>
+							</table>
+
+						</div>
+					</div>
+
+
+					<!-- <div class="card card-body card-light">
+						<h4 class="card-title" >Interfaces</h4>
+						<hr class="light-underline"/>
+
+						<div class="card-text" id="collapseInterfaces">
+							<div class="row">
+								<div class="col-md-10">
+									<div id="interfaceContainer">
+										<table><tr><td> Refreshing... </td><td><div class="loader-sm-nomargin" style="margin-left: 20px;" id="fileListLoader"></div></td></tr></table>
+									</div>
+								</div>
+							</div>
+
+							<div class="flex-row link-row">
+								<a class="card-link underline" >Refresh</a>
+							</div>
+						</div>
+					</div> -->
+				<!-- </div> -->
+				</div>
+				<div class="col-md-5" >
+
+
+					<div class="card card-body card-light">
+						<h4 class="card-title" >Flight Information</h4>
+						<hr class="light-underline"/>
+
+						<div class="card-text" id="reverseProxyThroughputPanel">
+							<div class="row">
+								<div class="col-md-10">
+
+									<table>
+										<tr> <td> Flight Number </td> <td id="ent_flight_num" class="tdp"> XXXX  </td> </tr>
+										<tr> <td> Time until arrival </td> <td id="ent_flight_time_remain" class="tdp"> XXXX  </td> </tr>
+										<tr> <td> Departure Airport </td> <td id="ent_airport_dept" class="tdp"> XXXX  </td> </tr>
+										<tr> <td> Arrival Airport </td> <td id="ent_airport_arrv" class="tdp"> XXXX  </td> </tr>
+										<tr> <td> Airframe Tail ID </td> <td id="ent_plane_tailid" class="tdp"> XXXX  </td> </tr>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card card-body card-light">
+						<h4 class="card-title" >Environment</h4>
+						<hr class="light-underline"/>
+
+						<div class="card-text" id="collapseMemoryUseage">
+							<div class="row">
+								<div class="col-md-10">
+
+									<table>
+										<tr> <td> Time at Departure Location </td> <td id="ent_time_dept" class="tdp"> XXXX  </td> </tr>
+										<tr> <td> Time at Arrival Location </td> <td id="ent_time_arrv" class="tdp"> XXXX  </td> </tr>
+										<tr> <td> Outside Air Temperature </td> <td id="ent_env_temp" class="tdp"> XXXX  </td> </tr>
+									</table>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- <div class="jumbotron">
+						<h1 class="h1-responsive">Hello, world!</h1>
+						<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
+							to featured content or information.
+						</p>
+						<hr class="my-2">
+						<p>It uses utility classes for typography and spacing to space content out within the larger
+							container.
+						</p>
+						<a class="btn btn-primary btn-lg" role="button">Learn more</a>
+					</div> -->
+					<!-- <div class="graph-container">
+						<canvas id="servicesBasic"></canvas>
+					</div> -->
+
+				</div>
+				<!-- <div class="col-md-9" style="background-color: yellow;">
+
+					One of three columns
+
+				</div> -->
+			<!-- </div> -->
+		<!-- </div> -->
+
+		</div>
+
+
+		</div>
+	</body>
+</html>

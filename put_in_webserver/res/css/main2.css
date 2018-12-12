@@ -1,0 +1,267 @@
+
+#main {
+  font-family: "IBM Plex Sans"
+}
+
+
+.pgreen {
+  color: #a2d0c0 !important;
+}
+
+.porange {
+  color: #cba477 !important;
+}
+
+.pred {
+  color: #d09292 !important;
+}
+
+.pgreen-background {
+  background-color: #a2d0c0 !important;
+}
+
+.porange-background {
+  background-color: #cba477 !important;
+}
+
+.pred-background {
+  background-color: #d09292 !important;
+}
+
+.pgreen-underline {
+  text-decoration: underline;
+  text-decoration-color: #a2d0c0 !important;
+}
+
+.porange-underline {
+  text-decoration: underline;
+  text-decoration-color: #cba477 !important;
+}
+
+.pred-underline {
+  text-decoration: underline;
+  text-decoration-color: #d09292 !important;
+}
+
+input {
+	border-radius:	0px !important;
+}
+
+.btn-danger {
+  background-color: #d16262 !important;
+}
+
+.alert {
+  border-radius: 0px !important;
+}
+
+.navbar {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.navbar, navbar-brand, a {
+  color: white ;
+  background-color: #323232 !important;
+  height: 48px;
+
+  font-size: 14px;
+  box-sizing: border-box;
+  align-items: center;
+
+  font-weight: lighter;
+
+  padding-left: 25px;
+}
+.navbar, a:hover {
+  color: white !important;
+}
+.navbar.navbar-light .navbar-nav .nav-item .nav-link {
+  color: white;
+}
+.nav-link {
+  font-weight: lighter;
+}
+.nav-dark:hover {
+  font-weight: lighter;
+  color: black !important;
+}
+.nav-dark {
+  font-weight: lighter;
+  color: black !important;
+}
+.navbar-brand {
+  color: white !important;
+}
+.nav-item {
+  padding: 5px;
+}
+.navbar-brand {
+  font-size: 16px;
+  line-height: 34px;
+}
+
+.navbar-nav {
+  line-height: 30px;
+}
+
+.navbar-nav a:hover {
+  font-weight: bolder !important;
+}
+
+.plainwhite {
+  background-color: transparent !important;
+  padding-left: 5;
+  text-decoration: none !important;
+}
+
+.plain {
+  color: #856404 !important;
+  background-color: transparent !important;
+  font-weight: normal;
+  padding-left: 5;
+  text-decoration: underline;
+}
+
+.plain:hover {
+  color: #856404 !important;
+  background-color: transparent !important;
+  font-weight: normal;
+  padding-left: 5;
+  text-decoration: underline;
+}
+
+.nomod {
+  color: black;
+  background-color: transparent !important;
+  font-weight: normal;
+  padding-left: 1;
+  text-decoration: none !important;
+}
+.nomod:hover {
+  color: black !important;
+}
+.underline {
+  text-decoration: underline !important;
+}
+.underline:hover {
+  text-decoration: underline !important;
+}
+
+.dropdown-menu {
+  color: white !important;
+  background-color: #323232 !important;
+  border-radius: 0;
+}
+
+.navbar .dropdown-menu a {
+  color: white !important;
+}
+
+.nav-right {
+  padding-right: 40px !important;
+}
+
+.nav-tight li {
+  margin-left: 1px !important;
+  line-height: 30px;
+}
+
+.nav-tight a:hover{
+  color: black !important;
+}
+
+.nav-light li a {
+  background-color: white !important;
+  color: black;
+}
+
+.dropdown-menu {
+  left: 50%;
+  right: auto;
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+
+.disabled {
+  color: #bbb !important;
+}
+
+.disabled-dark {
+  background-color: #DDDDDD !important;
+}
+
+.subtitle {
+  font-size: 10px;
+}
+
+.tight {
+  line-height: 40px;
+  padding: 10px;
+  padding-left: 15px;
+  max-height: 100%;
+}
+
+.row {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.col-4  {
+  padding: 0px;
+  margin: 0px;
+  /*margin-left: 5px*/
+}
+.row-wide {
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 15px;
+}
+
+.graph-container, canvas {
+  padding-top: 30px;
+  padding-left: 30px;
+  max-width: 80% !important;
+  max-height:300px !important;
+}
+
+
+.card-body{
+  background-color: #323232 !important;
+  color: white !important;
+  border-radius: 0 !important;
+}
+
+/*Landing page stuff*/
+.row-landing {
+  font-size: 14px;
+  color: #212529;
+}
+.row-landing .col-md-4 {
+  margin-top: 15px;
+  margin-left: 15px;
+}
+.light-underline {
+  width: 70%;
+  color: #171717;
+  border-style: 1px solid #171717;
+  margin-top: -5px !important;
+  padding-top: -5px !important;
+}
+.card-light { 
+  color: #212529 !important; 
+  background-color: transparent !important; 
+  box-shadow: none; 
+  /*border: 1px solid #212529;*/ 
+} 
+.card-light a { 
+  text-decoration: underline; 
+  background-color: transparent !important; 
+  color: #212529 !important; 
+} 
+ 
+.card-link { 
+  margin-left:-25px; 
+ 
+}
+
+
